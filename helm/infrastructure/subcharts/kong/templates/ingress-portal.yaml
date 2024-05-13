@@ -5,7 +5,7 @@
 {{- $path := .Values.portal.ingress.path -}}
 {{- $tls := .Values.portal.ingress.tls -}}
 {{- $hostname := .Values.portal.ingress.hostname -}}
-apiVersion: extensions/v1beta1
+apiVersion: extensions/v1
 kind: Ingress
 metadata:
   name: {{ template "kong.fullname" . }}-portal
@@ -21,9 +21,12 @@ spec:
     http:
       paths:
         - path: {{ $path }}
+          pathType: Prefix
           backend:
-            serviceName: {{ $serviceName }}-portal
-            servicePort: {{ $servicePort }}
+            service:
+            name: {{ $serviceName }}-portal
+            port:
+              number: {{ $servicePort }}
   {{- if $tls }}
   tls:
   - hosts:

@@ -4,7 +4,7 @@
 {{- $path := .Values.admin.ingress.path -}}
 {{- $tls := .Values.admin.ingress.tls -}}
 {{- $hostname := .Values.admin.ingress.hostname -}}
-apiVersion: extensions/v1beta1
+apiVersion: extensions/v1
 kind: Ingress
 metadata:
   name: {{ template "kong.fullname" . }}-admin
@@ -20,9 +20,12 @@ spec:
     http:
       paths:
         - path: {{ $path }}
+          pathType: Prefix
           backend:
-            serviceName: {{ $serviceName }}-admin
-            servicePort: {{ $servicePort }}
+            service:
+            name: {{ $serviceName }}-admin
+            port:
+              number: {{ $servicePort }}
   {{- if $tls }}
   tls:
   - hosts:
