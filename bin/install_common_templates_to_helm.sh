@@ -27,7 +27,7 @@ echo ${HELM_REPOSITORY_CACHE}
 curl -LO https://get.helm.sh/chartmuseum-v0.15.0-linux-386.tar.gz
 tar xzvf chartmuseum-v0.15.0-linux-386.tar.gz
 chmod +x ./linux-386/chartmuseum
-cp ./linux-386/chartmuseum /usr/local/bin
+sudo cp ./linux-386/chartmuseum /usr/local/bin
 
 nohup helm servecm --port=8879 --context-path=/charts --storage local --storage-local-rootdir $HELM_REPOSITORY_CACHE/local/ <<EOF &
 yes
